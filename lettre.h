@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------------------------------*/
-/*                                              caractere.h                                           */
+/*                                              lettre.h                                              */
 /*                                                                                                    */
 /* Role : Déclaration des directives de compilation, constantes symboliques, types et prototypes.     */
 /*                                                                                                    */
@@ -8,8 +8,8 @@
 
 
 
-#ifndef GESTION_DICTIONNAIRE_ARBORESCENT_CARACTERE_H
-#define GESTION_DICTIONNAIRE_ARBORESCENT_CARACTERE_H
+#ifndef GESTION_DICTIONNAIRE_ARBORESCENT_LETTRE_H
+#define GESTION_DICTIONNAIRE_ARBORESCENT_LETTRE_H
 
 
 
@@ -25,22 +25,22 @@
 
 
 
-#define TAILLECAR 3
+#define TAILLELETTRE 3
 
 
 
 
 
-typedef struct caractere
+typedef struct lettre
 {
   
   char valeur;
   
-  struct caractere * lv;
+  struct lettre * lv;
   
-  struct caractere * lh;
+  struct lettre * lh;
 
-}caractere_t;
+}lettre_t;
 
 
 
@@ -51,15 +51,19 @@ enum bool{faux, vrai};
 
 
 
-caractere_t * AllocationCaractere();
+lettre_t * AllocationLettre();
 
-enum bool EstMiniscule(caractere_t *);
+enum bool EstMiniscule(lettre_t *);
 
-enum bool EstMajuscule(caractere_t *);
+enum bool EstMajuscule(lettre_t *);
 
+void EnMajuscule(lettre_t *);
 
+void EnMinuscule(lettre_t *);
 
+lettre_t **  RechercherPrec (lettre_t **, char, enum bool *);
 
+void InsertionLettre (lettre_t **, lettre_t *);
 
 
 
