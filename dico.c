@@ -68,6 +68,8 @@ void CreerDico(lettre_t ** PpteteListe, FILE * f,enum bool * PcodeCreation)
       while(CodeLecture && CodeInsertion)                           /*tantque la lecture continue et l'insertion se passe bien*/
 	{
 
+	  position = 0;
+
 	  prec = RechercheDivergence(pmot, &position, PpteteListe);
 
 	  InsertionMot(pmot, &position, prec, &CodeInsertion);

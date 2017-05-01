@@ -79,12 +79,12 @@ lettre_t ** RechercheDivergence(char * pmot, int * position, lettre_t ** PpteteL
 
   enum bool trouver = vrai;
 
-  lettre_t ** prec = NULL;
+  lettre_t ** prec = PpteteListe;
 
   while((pmot[*position] != '\n') && (trouver))/*tantqu'on est pas à la fin du mot et qu'on trouve que la lettre précédent du mot existe déjà */
     {
 
-      prec = RechercherPrec(PpteteListe, pmot[*position], &trouver);/* Recherche la lettre courante du mot dans la liste chainée courante*/ 
+      prec = RechercherPrec(prec, pmot[*position], &trouver);/* Recherche la lettre courante du mot dans la liste chainée courante*/ 
 
       if(trouver)                                                     /*si on a trouvé la lettre courante*/
 	{
@@ -136,7 +136,7 @@ void InsertionMot(char * pmot, int * position, lettre_t ** ppcar, enum bool * Pc
 
   lettre_t * pcar = NULL;
 
-  *PcodeInsertion = vrai;                            /*on suppose que l'insertion du mot va bien se passé*/
+  *PcodeInsertion = vrai;                          /*on suppose que l'insertion du mot va bien se passé*/
 
   while(pmot[*position] != '\n')                   /*si on est pas à la fin du mot à insérer*/
     {
@@ -149,6 +149,7 @@ void InsertionMot(char * pmot, int * position, lettre_t ** ppcar, enum bool * Pc
 	  pcar->valeur = pmot[*position];          /*insérer la lettre dans le bloc*/
 
 	  InsertionLettre(ppcar, pcar);            /*insère le bloc dans la liste chainée courante de lettres*/
+
 
 	  (*position)++;                             /*on avance dans le mot*/
 
@@ -169,6 +170,11 @@ void InsertionMot(char * pmot, int * position, lettre_t ** ppcar, enum bool * Pc
 
     }
 
-  EnMajuscule(*ppcar);
+  if(EstMiniscule(*ppcar))
+    {
+
+      EnMajuscule(*ppcar);
+      
+    }
 
 }

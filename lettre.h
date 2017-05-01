@@ -61,6 +61,8 @@ void EnMajuscule(lettre_t *);
 
 void EnMinuscule(lettre_t *);
 
+void CompareLettre(char, lettre_t *, int *);
+
 lettre_t **  RechercherPrec (lettre_t **, char, enum bool *);
 
 void InsertionLettre (lettre_t **, lettre_t *);

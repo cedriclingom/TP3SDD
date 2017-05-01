@@ -155,6 +155,48 @@ void EnMinuscule(lettre_t * pcar)
 }
 
 
+/*----------------------------------------------------------------------------------------------------*/
+/*                                                                                                    */
+/* CompareLettre            Compare deux lettre sans tenir compte des majuscules.                     */
+/*                                                                                                    */
+/* En entrée             : c           - Variable contenant la première lettre.                       */
+/*                         pcar        - Ponteur sur un bloc contenant la deuxième lettre.            */
+/*                         comparaison - Pointeur sur une case mémoire contenant une valeur positive  */
+/*                                       si la première lettre > la deuxième, une valeur négative si  */
+/*                                       la première lettre <  la deuxième et zéro s'ils sont égaux.  */
+/*                                                                                                    */
+/* En sortie             : comparaison - Pointeur sur une case mémoire contenant une valeur positive  */
+/*                                       si la première lettre > la deuxième, une valeur négative si  */
+/*                                       la première lettre <  la deuxième et zéro s'ils sont égaux.  */
+/*                                                                                                    */
+/* Variable(s) locale(s) :               Rien comme variable locale.                                  */
+/*                                                                                                    */
+/*----------------------------------------------------------------------------------------------------*/
+
+
+
+void CompareLettre(char c, lettre_t * pcar, int * comparaison)
+{
+
+  if(pcar)
+    {
+
+      if(EstMajuscule(pcar))
+	{
+	  
+	  *comparaison = c - (pcar->valeur + ('a' - 'z'));
+	  
+	}
+      else
+	{
+	  
+	  *comparaison = c - pcar->valeur;
+	  
+	}
+      
+    }
+
+}
 
 
 /*------------------------------------------------------------------------------------------------------*/
@@ -175,25 +217,37 @@ void EnMinuscule(lettre_t * pcar)
 /*                         prec        - Pointeur de pointeur de tete de liste chainée des lettres ou   */
 /*                                       pointeur sur la case pointeur de l'élément précédent de la     */
 /*                                       liste chainée des lettres.                                     */
+/*                         comparaison - Variable le résultat de la comparaison de deux lettres qui sera*/
+/*                                       postif si la première lettre > la deuxième lettre, négatif si  */
+/*                                       la première lettre < la deuxième lettre et zéro s'ils sont     */
+/*                                       égaux.                                                         */
+/*                                                                                                      */
 /*------------------------------------------------------------------------------------------------------*/
 
 
 lettre_t **  RechercherPrec (lettre_t ** PpteteListe, char lettre, enum bool * ptrouver)
 {
+
+  int comparaison;
+
   lettre_t * pcour = *PpteteListe, ** prec = PpteteListe;           /*Initialisation à la première lettre et au pointeur de tete*/
 
   *ptrouver = faux;
 
-  while   ((pcour != NULL) && ((lettre - pcour->valeur) > 0)) /*Tantque je suis dans la liste et que ma lettre est plus grande*/
+  CompareLettre(lettre, pcour, &comparaison);
+
+  while((pcour != NULL) && (comparaison > 0)) /*Tantque je suis dans la liste et que ma lettre est plus grande*/
     {
       
       prec = &(pcour->lh);                                    /*On récupère l'adresse de la case pointeur de l'élément courant*/
       
       pcour = *prec;                                                 /*Passe au suivant*/
+
+      CompareLettre(lettre, pcour, &comparaison);
       
     }
 
-  if ((pcour != NULL) && !(lettre - pcour->valeur))         /*Si on trouve la lettre*/
+  if ((pcour != NULL) && !(comparaison))         /*Si on trouve la lettre*/
     {
 
       *ptrouver = vrai;
