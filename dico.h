@@ -19,6 +19,9 @@
 
 
 
+
+
+#include "./pile.h"
 #include "./mot.h"
 
 
@@ -28,6 +31,10 @@
 void CreerDico(lettre_t **, FILE *, enum bool *);
 
 void LectureFichier(char *, lettre_t **, enum bool *);
+
+void AffichageDicoParOrdreAlpha(lettre_t *);
+
+void LibererDico(lettre_t **);
 
 
 

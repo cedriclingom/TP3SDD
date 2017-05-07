@@ -15,14 +15,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "./lettre.h"
 
 
 
 
-#define TAILLE_MAX 10               /*Taille utiliser pour tester les fonctions de pile*/
-
-
-
+#define TAILLE_MAX 40               /*Taille utiliser pour tester les fonctions de pile*/
 
 
 
@@ -32,9 +30,6 @@
 
 
 
-
-
-enum BOOL{faux, vrai};
 
 
 
@@ -61,21 +56,17 @@ typedef struct pile
 
 pile_t * InitialisationPile(int);
 
-void EstPleine(pile_t *, enum BOOL *);
-
 void empiler(pile_t *, objet_t);
 
-void EstVide(pile_t *, enum BOOL *);
+void EstVide(pile_t *, enum bool *);
 
 objet_t depiler(pile_t *);
 
 objet_t SommetPile(pile_t *);
 
+void AffichageContenuPile(pile_t *);
+
 void LibererPile(pile_t **);
-
-void AfficherPile(pile_t *);
-
-void TestFonctionPile(int *);
 
 
 

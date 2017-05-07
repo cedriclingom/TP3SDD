@@ -150,7 +150,6 @@ void InsertionMot(char * pmot, int * position, lettre_t ** ppcar, enum bool * Pc
 
 	  InsertionLettre(ppcar, pcar);            /*insère le bloc dans la liste chainée courante de lettres*/
 
-
 	  (*position)++;                             /*on avance dans le mot*/
 
 	  if(pmot[*position] != '\n')              /*si on n'est pas à la fin du mot*/

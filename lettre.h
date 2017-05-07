@@ -67,6 +67,9 @@ lettre_t **  RechercherPrec (lettre_t **, char, enum bool *);
 
 void InsertionLettre (lettre_t **, lettre_t *);
 
+void SuppressionLettre(lettre_t **);
+
+
 
 
 #endif

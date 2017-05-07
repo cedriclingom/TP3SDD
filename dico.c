@@ -92,6 +92,8 @@ void CreerDico(lettre_t ** PpteteListe, FILE * f,enum bool * PcodeCreation)
 
 	}
 
+      free(pmot);
+
     }
   else
     {
@@ -106,8 +108,8 @@ void CreerDico(lettre_t ** PpteteListe, FILE * f,enum bool * PcodeCreation)
 
 
 /*------------------------------------------------------------------------------------------------------------------*/
-/* LectureFichier           Lire chaque ligne de notre fichier qui contient comme données année, semaine, jour,     */
-/*                          heure et créer une liste chainée à deux niveaux à partir de cette lecture.              */
+/* LectureFichier          Permet l'ouverture du fichier et la création du dictionnaire des mots lu à partir du     */
+/*                         fichier.                                                                                 */
 /*                                                                                                                  */
 /* En entrée:     NomFichier - Nom du fichier dans le quel on va lire.                                              */
 /*               PpteteListe - Pointeur de pointeur de tete de liste chainée des semaines.                          */
@@ -151,3 +153,144 @@ void LectureFichier(char * NomFichier, lettre_t ** PpteteListe, enum bool * Pcod
 }
 
 
+/*----------------------------------------------------------------------------------------------------*/
+/*                                                                                                    */
+/* AffichageDicoParOrdreAlpha              Affichage de tout les mots de dictionnaire en ordre        */
+/*                                         alphabetique.                                              */
+/*                                                                                                    */
+/* En entrée             : pdico         - Pointeur de tete de liste chainée de lettres.              */
+/*                                                                                                    */
+/* En sortie             :                 Rien en sortie                                             */
+/*                                                                                                    */
+/* Variable(s) locale(s) : pcour         - l'element courant qui parcourt l'arbre.                    */
+/*                         pile          - Pointeur sur la structure de pile contient les adresses    */
+/* 					   des lettre parcourues.                                     */
+/*                         fin           - un booleen indique la fin du programme                     */
+/*                                                                                                    */
+/*----------------------------------------------------------------------------------------------------*/
+
+void AffichageDicoParOrdreAlpha(lettre_t * pdico)
+{
+
+	lettre_t * pcour = pdico;
+
+	int nb = 0;
+
+	enum bool fin = faux;				/*initialialisation de notre courant*/
+	
+	pile_t * pile = InitialisationPile(TAILLE_MAX);	/* l'allocation de la pile*/
+	
+	if(pile)                                        /* si l'allocation est bien faite*/
+	{
+
+	  while(!fin)					/* tant que on est pas arrivé à la fin*/
+	    {
+	      
+	      while(pcour != NULL)			/*tant que le courant est different de NIL*/
+		{
+		  
+		  empiler(pile, pcour);			/* on empile l'adresse de la lettre courante*/
+				
+		  if(EstMajuscule(pcour))		/*si la lettre est en majuscule*/
+		    {
+		      
+		      AffichageContenuPile(pile);	/* On affiche tous lettre dont les pointeurs sont dans la pile*/
+
+		      ++nb;
+
+		      printf("\n");
+					
+		    }
+
+		  pcour = pcour->lv;			/* on avance vers le lien vertical*/
+				
+		}
+
+	      EstVide(pile,&fin);
+			
+	      if(!fin)		
+		{
+
+		  pcour = depiler(pile);
+		  
+		  pcour = pcour->lh;
+
+		}
+
+	    }
+
+	  LibererPile(&pile);
+
+	  printf("%d\n", nb);
+
+	}
+	else
+	  {
+	    
+	    printf("Erreur dans l'allocation de la pile");
+
+	  }
+
+}
+
+
+/*------------------------------------------------------------------------------------------------------------------*/
+/* LectureFichier           Libère le dictionnaire ( qui est une foret).                                            */
+/*                                                                                                                  */
+/* En entrée             : PpteteListe - Pointeur de pointeur de tete de liste chainée des lettres.                 */
+/*                                                                                                                  */
+/* En sortie             : PpteteListe - Pointeur de pointeur de tete de liste chainée des lettres.                 */
+/*                                                                                                                  */
+/* Variable(s) locale(s) : vide        - Pointeur sur une case mémoire contenant vrai si la pile vide et faux sinon.*/
+/*                         pile        - Pointeur de structure de pile.                                             */
+/*                         pcour       - Pointeur de lettre courante dans la liste chainée de lettres.              */
+/*                                                                                                                  */
+/*------------------------------------------------------------------------------------------------------------------*/  
+
+
+void LibererDico(lettre_t ** PpteteListe)
+{
+  
+  enum bool vide;
+
+  pile_t * pile = InitialisationPile(TAILLE_MAX);
+  
+  lettre_t * pcour = *PpteteListe;
+
+  if(pile)                                             /*si la pile est alloué*/
+    {
+  
+      while(pcour != NULL)                             /*tantque j'ai pas parcouru tout l'arbre*/
+	{
+	  
+	  while(pcour->lv != NULL)                     /*tantqu'il a un lien vertical*/
+	    {
+	      
+	      empiler(pile, pcour);                    /*sauvegarder l'adresse de la lettre courante*/
+	      
+	      pcour =  pcour->lv;                      /*Mise à jour du courant*/
+	      
+	    }
+	  
+	  SuppressionLettre(&pcour);
+	  
+	  EstVide(pile, &vide);
+	  
+	  while( !pcour && !vide)                      /*tantqu'on a aucune lettre courante et la pile est non vide*/
+	    {
+	      
+	      pcour = depiler(pile);
+	      
+	      SuppressionLettre(&pcour);
+
+	      EstVide(pile, &vide);
+	      
+	    }
+	  
+	}
+      
+      LibererPile(&pile);
+      
+    }
+  
+}

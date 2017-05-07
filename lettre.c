@@ -178,13 +178,15 @@ void EnMinuscule(lettre_t * pcar)
 void CompareLettre(char c, lettre_t * pcar, int * comparaison)
 {
 
+  *comparaison = -1;
+
   if(pcar)
     {
 
       if(EstMajuscule(pcar))
 	{
 	  
-	  *comparaison = c - (pcar->valeur + ('a' - 'z'));
+	  *comparaison = c - (pcar->valeur + ('a' - 'A'));
 	  
 	}
       else
@@ -281,6 +283,34 @@ void InsertionLettre (lettre_t ** ppcar, lettre_t * pcar)
   pcar->lh = *ppcar;
 
   *ppcar = pcar;
+
+  pcar = NULL;
+
+}
+
+
+/*-------------------------------------------------------------------------------------------------------*/
+/* SuppressionAction          Supprime une lettre de liste chainée courante des lettres.                 */ 
+/*										     			 */ 
+/* En entrée             : ppcar - Pointeur de pointeur de tete de liste chainée courante des lettres    */
+/*                                 ou pointeur sur la case pointeur de l'élément précédent de la liste   */
+/*                                 chainée courante des lettres.                                         */                  
+/*                                                                                                       */
+/* En sortie             : ppcar - Pointeur de pointeur de tete de liste chainée courante des lettres    */
+/*                                 ou pointeur sur la case pointeur de l'élément précédent de la liste   */
+/*                                   chainée courante des lettres.                                       */ 
+/* Variable(s) locale(s) : pcar - Pointeur sur lettre à supprimer.                                       */
+/*-------------------------------------------------------------------------------------------------------*/
+
+
+void SuppressionLettre(lettre_t ** ppcar)
+{
+
+  lettre_t * pcar = *ppcar;     /*recupère l'adresse de lettre à supprimer*/
+
+  *ppcar = pcar->lh;            /*pointe sur la lettre après la lettre à supprimer*/
+
+  free(pcar);                   /*supprime la lettre*/
 
   pcar = NULL;
 

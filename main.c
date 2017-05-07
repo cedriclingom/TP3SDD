@@ -13,6 +13,10 @@ int main(int argc, char ** argv)
     {
 
       LectureFichier(argv[1], &pdico, &CodeLecture);
+
+      AffichageDicoParOrdreAlpha(pdico);
+
+      LibererDico(&pdico);
 		     
     }
   else
