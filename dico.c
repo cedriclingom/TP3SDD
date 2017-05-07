@@ -155,21 +155,20 @@ void LectureFichier(char * NomFichier, lettre_t ** PpteteListe, enum bool * Pcod
 
 /*----------------------------------------------------------------------------------------------------*/
 /*                                                                                                    */
-/* AffichageDicoParOrdreAlpha              Affichage de tout les mots de dictionnaire en ordre        */
-/*                                         alphabetique.                                              */
+/* AffichageDico               Affichage de tout les mots de dictionnaire en ordre alphabetique.      */
 /*                                                                                                    */
 /* En entrée             : pdico         - Pointeur de tete de liste chainée de lettres.              */
 /*                                                                                                    */
 /* En sortie             :                 Rien en sortie                                             */
 /*                                                                                                    */
-/* Variable(s) locale(s) : pcour         - l'element courant qui parcourt l'arbre.                    */
+/* Variable(s) locale(s) : pcour         - L'element courant qui parcourt l'arbre.                    */
 /*                         pile          - Pointeur sur la structure de pile contient les adresses    */
 /* 					   des lettre parcourues.                                     */
-/*                         fin           - un booleen indique la fin du programme                     */
+/*                         fin           - Un booleen indique la fin du programme                     */
 /*                                                                                                    */
 /*----------------------------------------------------------------------------------------------------*/
 
-void AffichageDicoParOrdreAlpha(lettre_t * pdico)
+void AffichageDico(lettre_t * pdico)
 {
 
 	lettre_t * pcour = pdico;
