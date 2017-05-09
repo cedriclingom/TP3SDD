@@ -355,7 +355,7 @@ void AffichageDicoAvecMotif(lettre_t * pdico, char * pmotif)
 	      
 	      empiler(pile, pcour);			/* on empile l'adresse de la lettre courante*/
 	      
-	      if(EstMajuscule(pcour))		/*si la lettre est en majuscule*/
+	      if(EstMajuscule(pcour))		        /*si la lettre est en majuscule*/
 		{
 		  
 		  AffichageContenuPile(pmotif, pile);	/* On affiche tous lettre dont les pointeurs sont dans la pile*/
@@ -370,7 +370,7 @@ void AffichageDicoAvecMotif(lettre_t * pdico, char * pmotif)
 	  
 	  EstVide(pile,&fin);
 	  
-	  if(!fin)		
+	  if(!fin)                                     /*si la pile n'est pas vide*/		
 	    {
 	      
 	      pcour = depiler(pile);
@@ -535,31 +535,31 @@ void RechercheDico(lettre_t * pdico)
 {
 
   enum bool CodeLecture;
-
-   char * pmotif = (char *)malloc(TAILLEMOT * sizeof(char));
- 
-   if(pmotif)                                                    /*si l'allocation du motif réussi*/
-     {
-       
-       printf("Veuillez entrer le motif à rechercher\n");
-       
-       CodeLecture = scanf("%s", pmotif);
-       
-       if(CodeLecture)                                           /*si lecture du motif bien passé*/
-	 {
-	   
-	   RechercheMotif(pdico, pmotif);
-
-	 }
-       
-       free(pmotif);
-
-     }
-   else
-     {
-       
-       printf("Erreur d'allocation du motif.\n");
-       
-     }
-   
+  
+  char * pmotif = (char *)malloc(TAILLEMOT * sizeof(char));
+  
+  if(pmotif)                                                    /*si l'allocation du motif réussi*/
+    {
+      
+      printf("Veuillez entrer le motif à rechercher\n");
+      
+      CodeLecture = scanf("%s", pmotif);
+      
+      if(CodeLecture)                                           /*si lecture du motif bien passé*/
+	{
+	  
+	  RechercheMotif(pdico, pmotif);
+	  
+	}
+      
+      free(pmotif);
+      
+    }
+  else
+    {
+      
+      printf("Erreur d'allocation du motif.\n");
+      
+    }
+  
 }
