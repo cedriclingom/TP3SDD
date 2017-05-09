@@ -16,6 +16,8 @@ int main(int argc, char ** argv)
 
       AffichageDico(pdico);
 
+      RechercheDico(pdico);
+     
       LibererDico(&pdico);
 		     
     }

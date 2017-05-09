@@ -81,7 +81,7 @@ lettre_t ** RechercheDivergence(char * pmot, int * position, lettre_t ** PpteteL
 
   lettre_t ** prec = PpteteListe;
 
-  while((pmot[*position] != '\n') && (trouver))/*tantqu'on est pas à la fin du mot et qu'on trouve que la lettre précédent du mot existe déjà */
+  while(((pmot[*position] != '\n') && (pmot[*position] != '\0')) && (trouver))/*tantqu'on est pas à la fin du mot et qu'on trouve que la lettre précédent du mot existe déjà */
     {
 
       prec = RechercherPrec(prec, pmot[*position], &trouver);/* Recherche la lettre courante du mot dans la liste chainée courante*/ 
@@ -91,7 +91,7 @@ lettre_t ** RechercheDivergence(char * pmot, int * position, lettre_t ** PpteteL
 
 	  (*position)++;                                                  /*on avance dans le mot*/
 
-	  if(pmot[*position] != '\n')                                   /*si on est pas à la fin du mot*/
+	  if((pmot[*position] != '\n') || (pmot[*position] != '\n'))                                   /*si on est pas à la fin du mot*/
 	    {
 
 	      prec = &((*prec)->lv);                        /*On va vers le lien vertical*/

@@ -64,7 +64,7 @@ objet_t depiler(pile_t *);
 
 objet_t SommetPile(pile_t *);
 
-void AffichageContenuPile(pile_t *);
+void AffichageContenuPile(char *, pile_t *);
 
 void LibererPile(pile_t **);
 

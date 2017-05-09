@@ -187,28 +187,35 @@ objet_t SommetPile(pile_t * pile)
 /*                                                                                                    */
 /*----------------------------------------------------------------------------------------------------*/
 
-void AffichageContenuPile(pile_t * pile)
+void AffichageContenuPile(char * pmotif, pile_t * pile)
 {
 	int i ;
 
+	if(pmotif)                                                 /*si le motif existe*/
+	  {
+	    
+	    printf("%s", pmotif);
+	    
+	  }
+
 	for(i = 0; i <= pile->NumeroSommet; ++i)
-	{
-
-		if(EstMajuscule((pile->tab)[i]))
-		  {
-		    
-		    printf("%c",(((pile->tab)[i])->valeur) + ('a' - 'A'));
-
-		  }
-		else
-		  {
-
-		    printf("%c",((pile->tab)[i])->valeur);
-
-		  }
-
-	}
-
+	  {
+	    
+	    if(EstMajuscule((pile->tab)[i]))
+	      {
+		
+		printf("%c",(((pile->tab)[i])->valeur) + ('a' - 'A'));
+		
+	      }
+	    else
+	      {
+		
+		printf("%c",((pile->tab)[i])->valeur);
+		
+	      }
+	    
+	  }
+	
 }
 
 

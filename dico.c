@@ -20,6 +20,172 @@
 
 
 
+
+/*----------------------------------------------------------------------------------------------------*/
+/*                                                                                                    */
+/* LectureMot              Lit un mot à partir d'un fichier.                                          */
+/*                                                                                                    */
+/* En entrée             : f            - Pointeur sur un fichier.                                    */
+/*                         pmot         - Pointeur sur une chaine de caractères qui est un mot.       */
+/*                         PcodeLecture - Pointeur sur une case mémoire contenant une valeur 1 si la  */
+/*                                        lecture c'est bien passée et 0 sinon.                       */
+/*                                                                                                    */
+/* En sortie             : pmot         - Pointeur sur une chaine de caractères qui est un mot.       */
+/*                         PcodeLecture - Pointeur sur une case mémoire contenant une valeur 1 si la  */
+/*                                        lecture c'est bien passée et 0 sinon.                       */
+/*                                                                                                    */
+/* Variable(s) locale(s) :                Rien comme variable loacle.                                 */
+/*                                                                                                    */
+/*----------------------------------------------------------------------------------------------------*/
+
+
+void LectureMot(FILE * f, char * pmot, enum bool * PcodeLecture)
+{
+
+  if(fgets(pmot, TAILLEMOT, f)) /*si un mot existe dans le fichier et que la lecture c'est bien passé*/
+    {
+
+      *PcodeLecture = vrai;       
+
+    }
+  else
+    {
+
+      *PcodeLecture = faux;
+
+    }
+
+}
+
+
+/*----------------------------------------------------------------------------------------------------*/
+/*                                                                                                    */
+/* RechercheDivergence           Recherche et renvoie l'adresse de la case pointeur de la lettre après*/
+/*                               la quelle on doit insérer.                                           */
+/*                                                                                                    */
+/* En entrée             : pmot        - Pointeur sur le mot à insérer dans le dictionnaire.          */
+/*                         position    - L'indice de la lettre courante dans le mot.                  */
+/*                         PpteteListe - Pointeur de pointeur de liste chainées de lettres.           */                        
+/*                                                                                                    */
+/* En sortie :             position    - L'indice de la lettre courante dans le mot.                  */
+/*                         PpteteListe - Pointeur de pointeur de liste chainées de lettres.           */
+/*                                                                                                    */
+/* Variable(s) locale(s) : prec        - Pointeur de pointeur de tete de liste chainée de lettres ou  */
+/*                                       pointeur sur la case pointeur de l'élément précédent de la   */
+/*                                       liste chainée de lettres.                                    */
+/*                         trouver     - Case mémoire contenant vrai si la lettre est trouver et faux */
+/*                                       sinon.                                                       */
+/*                                                                                                    */
+/*----------------------------------------------------------------------------------------------------*/
+
+
+
+lettre_t ** RechercheDivergence(char * pmot, int * position, lettre_t ** PpteteListe)
+{
+
+  enum bool trouver = vrai;
+
+  lettre_t ** prec = PpteteListe;
+
+  while(((pmot[*position] != '\n') && (pmot[*position] != '\0')) && (trouver))/*tantqu'on est pas à la fin du mot et qu'on trouve que la lettre précédent du mot existe déjà */
+    {
+
+      prec = RechercherPrec(prec, pmot[*position], &trouver);/* Recherche la lettre courante du mot dans la liste chainée courante*/ 
+
+      if(trouver)                                                     /*si on a trouvé la lettre courante*/
+	{
+
+	  (*position)++;                                                  /*on avance dans le mot*/
+
+	  if((pmot[*position] != '\n') || (pmot[*position] != '\n'))                                   /*si on est pas à la fin du mot*/
+	    {
+
+	      prec = &((*prec)->lv);                        /*On va vers le lien vertical*/
+
+	    }
+
+	}
+
+    }
+
+  return prec;
+
+}
+
+
+/*----------------------------------------------------------------------------------------------------*/
+/*                                                                                                    */
+/* InsertionMot            Insère un mot dans le dictionnaire.                                        */
+/*                                                                                                    */
+/* En entrée             : pmot           - Pointeur sur le mot à insérer dans le dictionnaire.       */
+/*                         position       - Pointeur sur la case mémoire contenant la position        */
+/*                                          courante dans le mot.                                     */
+/*                         ppcar          - Pointeur de pointeur de tete de liste chainée des lettres */
+/*                                          ou pointeur sur la case pointeur de l'élément précédent   */
+/*                                          de liste chainée de lettres.                              */
+/*                         PcodeInsertion - Pointeur sur la case mémoire contenant vrai si l'insertion*/
+/*                                          c'est bien passée et faux sinon.                          */
+/*                                                                                                    */
+/* En sortie             : position       - Pointeur sur la case mémoire contenant la position        */
+/*                                          courante dans le mot.                                     */
+/*                         PcodeInsertion - Pointeur sur la case mémoire contenant vrai si l'insertion*/
+/*                                          c'est bien passée et faux sinon.                          */             
+/*                                                                                                    */
+/* Variable(s) locale(s) : pcar           - Pointeur sur le bloc devant contenir une lettre du mot.   */
+/*                                                                                                    */
+/*----------------------------------------------------------------------------------------------------*/
+
+
+
+void InsertionMot(char * pmot, int * position, lettre_t ** ppcar, enum bool * PcodeInsertion)
+{
+
+  lettre_t * pcar = NULL;
+
+  *PcodeInsertion = vrai;                          /*on suppose que l'insertion du mot va bien se passé*/
+
+  while(pmot[*position] != '\n')                   /*si on est pas à la fin du mot à insérer*/
+    {
+
+      pcar = AllocationLettre();
+
+      if(pcar != NULL)                             /*si le bloc lettre est alloué*/
+	{
+
+	  pcar->valeur = pmot[*position];          /*insérer la lettre dans le bloc*/
+
+	  InsertionLettre(ppcar, pcar);            /*insère le bloc dans la liste chainée courante de lettres*/
+
+	  (*position)++;                             /*on avance dans le mot*/
+
+	  if(pmot[*position] != '\n')              /*si on n'est pas à la fin du mot*/
+	    {
+
+	      ppcar = &((*ppcar)->lv);             /*on fait la mise à jour du pointeur precedent*/
+
+	    }
+	  
+	}
+      else
+	{
+
+	  *PcodeInsertion = faux;
+
+	}
+
+    }
+
+  if(EstMiniscule(*ppcar))
+    {
+
+      EnMajuscule(*ppcar);
+      
+    }
+
+}
+
+
+
 /*----------------------------------------------------------------------------------------------------*/
 /*                                                                                                    */
 /* CreerDico           Création du dictionnaire.                                                      */
@@ -152,12 +318,12 @@ void LectureFichier(char * NomFichier, lettre_t ** PpteteListe, enum bool * Pcod
 
 }
 
-
 /*----------------------------------------------------------------------------------------------------*/
 /*                                                                                                    */
 /* AffichageDico               Affichage de tout les mots de dictionnaire en ordre alphabetique.      */
 /*                                                                                                    */
 /* En entrée             : pdico         - Pointeur de tete de liste chainée de lettres.              */
+/*                         pmotif        - Pointeur sur une chaine de caractères.                     */
 /*                                                                                                    */
 /* En sortie             :                 Rien en sortie                                             */
 /*                                                                                                    */
@@ -168,67 +334,81 @@ void LectureFichier(char * NomFichier, lettre_t ** PpteteListe, enum bool * Pcod
 /*                                                                                                    */
 /*----------------------------------------------------------------------------------------------------*/
 
+
+void AffichageDicoAvecMotif(lettre_t * pdico, char * pmotif)
+{
+
+  lettre_t * pcour = pdico;
+  
+  enum bool fin = faux;				/*initialialisation de notre courant*/
+  
+  pile_t * pile = InitialisationPile(TAILLE_MAX);	/* l'allocation de la pile*/
+  
+  if(pile)                                        /* si l'allocation est bien faite*/
+    {
+
+      while(!fin)					/* tant que on est pas arrivé à la fin*/
+	{
+	      
+	  while(pcour != NULL)			/*tant que le courant est different de NIL*/
+	    {
+	      
+	      empiler(pile, pcour);			/* on empile l'adresse de la lettre courante*/
+	      
+	      if(EstMajuscule(pcour))		/*si la lettre est en majuscule*/
+		{
+		  
+		  AffichageContenuPile(pmotif, pile);	/* On affiche tous lettre dont les pointeurs sont dans la pile*/
+		  
+		  printf("\n");
+		  
+		}
+	      
+	      pcour = pcour->lv;			/* on avance vers le lien vertical*/
+	      
+	    }
+	  
+	  EstVide(pile,&fin);
+	  
+	  if(!fin)		
+	    {
+	      
+	      pcour = depiler(pile);
+	      
+	      pcour = pcour->lh;
+	      
+	    }
+	  
+	}
+      
+      LibererPile(&pile);
+      
+    }
+  else
+    {
+      
+      printf("Erreur dans l'allocation de la pile");
+      
+    }
+  
+}
+
+
+/*----------------------------------------------------------------------------------------------------*/
+/*                                                                                                    */
+/* AffichageDico               Affichage de tout les mots de dictionnaire en ordre alphabetique.      */
+/*                                                                                                    */
+/* En entrée             : pdico         - Pointeur de tete de liste chainée de lettres.              */
+/*                                                                                                    */
+/* En sortie             :                 Rien en sortie                                             */
+/*                                                                                                    */
+/* Variable(s) locale(s) :                 Rien en variable locale.                                   */
+/*----------------------------------------------------------------------------------------------------*/
+
 void AffichageDico(lettre_t * pdico)
 {
 
-	lettre_t * pcour = pdico;
-
-	int nb = 0;
-
-	enum bool fin = faux;				/*initialialisation de notre courant*/
-	
-	pile_t * pile = InitialisationPile(TAILLE_MAX);	/* l'allocation de la pile*/
-	
-	if(pile)                                        /* si l'allocation est bien faite*/
-	{
-
-	  while(!fin)					/* tant que on est pas arrivé à la fin*/
-	    {
-	      
-	      while(pcour != NULL)			/*tant que le courant est different de NIL*/
-		{
-		  
-		  empiler(pile, pcour);			/* on empile l'adresse de la lettre courante*/
-				
-		  if(EstMajuscule(pcour))		/*si la lettre est en majuscule*/
-		    {
-		      
-		      AffichageContenuPile(pile);	/* On affiche tous lettre dont les pointeurs sont dans la pile*/
-
-		      ++nb;
-
-		      printf("\n");
-					
-		    }
-
-		  pcour = pcour->lv;			/* on avance vers le lien vertical*/
-				
-		}
-
-	      EstVide(pile,&fin);
-			
-	      if(!fin)		
-		{
-
-		  pcour = depiler(pile);
-		  
-		  pcour = pcour->lh;
-
-		}
-
-	    }
-
-	  LibererPile(&pile);
-
-	  printf("%d\n", nb);
-
-	}
-	else
-	  {
-	    
-	    printf("Erreur dans l'allocation de la pile");
-
-	  }
+  AffichageDicoAvecMotif(pdico, NULL);
 
 }
 
@@ -292,4 +472,94 @@ void LibererDico(lettre_t ** PpteteListe)
       
     }
   
+}
+
+
+/*----------------------------------------------------------------------------------------------------*/
+/*                                                                                                    */
+/* RechercheMotif               Recherche un motif et affiche les mots qui commencent par ce motif.   */
+/*                                                                                                    */
+/* En entrée             : pdico         - Pointeur de tete de liste chainée de lettres.              */
+/*                         pmotif        - Pointeur sur une chaine de caractères.                     */
+/*                                                                                                    */
+/* En sortie             :                 Rien en sortie                                             */
+/*                                                                                                    */
+/* Variable(s) locale(s) : position      - La position courante dans le motif.                        */
+/*                         prec          - Pointeur de pointeur sur un bloc contenant une lettre.     */
+/*                                                                                                    */
+/*----------------------------------------------------------------------------------------------------*/
+
+
+
+void RechercheMotif(lettre_t * pdico, char * pmotif)
+{
+
+  int position = 0;
+
+  lettre_t ** prec = RechercheDivergence(pmotif, &position, &pdico);       /*Cherche si le motif existe*/
+
+  if(pmotif[position] == '\0')                                             /*si le motif existe*/
+    {
+
+      AffichageDicoAvecMotif(*prec, pmotif);                               /*Affiche les mots qui commencent par le motif*/
+
+    }
+  else
+    {
+
+      printf("Le motif n'existe pas!\n");
+
+    }
+
+}
+
+
+
+/*----------------------------------------------------------------------------------------------------*/
+/*                                                                                                    */
+/* RechercheDico             Lit un motif qui sera rechercher dans le dictionnaire.                   */
+/*                                                                                                    */
+/* En entrée             : pdico         - Pointeur de tete de liste chainée de lettres.              */
+/*                                                                                                    */
+/* En sortie             :                 Rien en sortie                                             */
+/*                                                                                                    */
+/* Variable(s) locale(s) : CodeLecture   - Variable contenant vrai si la lecture du motif c'est bien  */
+/*                                         passé et faux sinon.                                       */
+/*                         pmotif        - Pointeur sur une chaine de caractères.                     */
+/*                                                                                                    */
+/*----------------------------------------------------------------------------------------------------*/
+
+
+
+void RechercheDico(lettre_t * pdico)
+{
+
+  enum bool CodeLecture;
+
+   char * pmotif = (char *)malloc(TAILLEMOT * sizeof(char));
+ 
+   if(pmotif)                                                    /*si l'allocation du motif réussi*/
+     {
+       
+       printf("Veuillez entrer le motif à rechercher\n");
+       
+       CodeLecture = scanf("%s", pmotif);
+       
+       if(CodeLecture)                                           /*si lecture du motif bien passé*/
+	 {
+	   
+	   RechercheMotif(pdico, pmotif);
+
+	 }
+       
+       free(pmotif);
+
+     }
+   else
+     {
+       
+       printf("Erreur d'allocation du motif.\n");
+       
+     }
+   
 }
