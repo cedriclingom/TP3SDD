@@ -14,9 +14,9 @@ int main(int argc, char ** argv)
 
       LectureFichier(argv[1], &pdico, &CodeLecture);
 
-      AffichageDico(pdico);
+      AffichageDico(pdico);                          /*Affiche le dictionnaire sans motif*/
 
-      RechercheDico(pdico);
+      RechercheDico(pdico);                          /*Affiche les mots d'un dictionnaire qui commence par un motif*/
      
       LibererDico(&pdico);
 		     

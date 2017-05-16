@@ -90,17 +90,17 @@ lettre_t ** RechercheDivergence(char * pmot, int * position, lettre_t ** PpteteL
   while(((pmot[*position] != '\n') && (pmot[*position] != '\0')) && (trouver))/*tantqu'on est pas à la fin du mot et qu'on trouve que la lettre précédent du mot existe déjà */
     {
 
-      prec = RechercherPrec(prec, pmot[*position], &trouver);/* Recherche la lettre courante du mot dans la liste chainée courante*/ 
+      prec = RechercherPrec(prec, pmot[*position], &trouver);       /* Recherche la lettre courante du mot dans la liste chainée courante*/ 
 
-      if(trouver)                                                     /*si on a trouvé la lettre courante*/
+      if(trouver)                                                   /*si on a trouvé la lettre courante*/
 	{
 
-	  (*position)++;                                                  /*on avance dans le mot*/
+	  (*position)++;                                            /*on avance dans le mot*/
 
-	  if((pmot[*position] != '\n') || (pmot[*position] != '\n'))                                   /*si on est pas à la fin du mot*/
+	  if((pmot[*position] != '\n'))   /*si on est pas à la fin du mot*/
 	    {
 
-	      prec = &((*prec)->lv);                        /*On va vers le lien vertical*/
+	      prec = &((*prec)->lv);                                   /*On va vers le lien vertical*/
 
 	    }
 
@@ -213,7 +213,7 @@ void InsertionMot(char * pmot, int * position, lettre_t ** ppcar, enum bool * Pc
 
 
 
-void CreerDico(lettre_t ** PpteteListe, FILE * f,enum bool * PcodeCreation)
+void CreerDico(lettre_t ** PpteteListe, FILE * f, enum bool * PcodeCreation)
 {
 
   int position = 0;
@@ -274,6 +274,7 @@ void CreerDico(lettre_t ** PpteteListe, FILE * f,enum bool * PcodeCreation)
 
 
 /*------------------------------------------------------------------------------------------------------------------*/
+/*                                                                                                                  */
 /* LectureFichier          Permet l'ouverture du fichier et la création du dictionnaire des mots lu à partir du     */
 /*                         fichier.                                                                                 */
 /*                                                                                                                  */
@@ -287,6 +288,7 @@ void CreerDico(lettre_t ** PpteteListe, FILE * f,enum bool * PcodeCreation)
 /*                             bien passé et faux sinon.                                                            */
 /*                                                                                                                  */
 /* Variable(s) locale(s):  f - Pointeur sur le fichier.                                                             */
+/*                                                                                                                  */
 /*------------------------------------------------------------------------------------------------------------------*/  
 
    
@@ -344,7 +346,7 @@ void AffichageDicoAvecMotif(lettre_t * pdico, char * pmotif)
   
   pile_t * pile = InitialisationPile(TAILLE_MAX);	/* l'allocation de la pile*/
   
-  if(pile)                                        /* si l'allocation est bien faite*/
+  if(pile)                                        /* si l'allocation est bien fait*/
     {
 
       while(!fin)					/* tant que on est pas arrivé à la fin*/
@@ -357,11 +359,18 @@ void AffichageDicoAvecMotif(lettre_t * pdico, char * pmotif)
 	      
 	      if(EstMajuscule(pcour))		        /*si la lettre est en majuscule*/
 		{
+
+		  if(pmotif)
+		    {
+
+		      printf("%s", pmotif);
+		      
+		    }
 		  
-		  AffichageContenuPile(pmotif, pile);	/* On affiche tous lettre dont les pointeurs sont dans la pile*/
+		  AffichageContenuPile(pile);	/* On affiche tous lettre dont les pointeurs sont dans la pile*/
 		  
 		  printf("\n");
-		  
+
 		}
 	      
 	      pcour = pcour->lv;			/* on avance vers le lien vertical*/
@@ -407,6 +416,8 @@ void AffichageDicoAvecMotif(lettre_t * pdico, char * pmotif)
 
 void AffichageDico(lettre_t * pdico)
 {
+
+  printf("Le contenu du dictionnaire est :\n");
 
   AffichageDicoAvecMotif(pdico, NULL);
 
@@ -500,6 +511,8 @@ void RechercheMotif(lettre_t * pdico, char * pmotif)
 
   if(pmotif[position] == '\0')                                             /*si le motif existe*/
     {
+
+      printf("Le mots commençant par le motif sont:\n");
 
       AffichageDicoAvecMotif(*prec, pmotif);                               /*Affiche les mots qui commencent par le motif*/
 

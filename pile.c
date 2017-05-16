@@ -177,45 +177,46 @@ objet_t SommetPile(pile_t * pile)
 
 
 /*----------------------------------------------------------------------------------------------------*/
-/* AfficherContenuPile          Affiche le contenu des pointeurs dans de notre pile.                         */
+/* AfficherContenuPile          Affiche le contenu des pointeurs dans de notre pile.                  */
 /*                                                                                                    */
-/* En entrée :    pile - Pointeur sur la structure de pile.                                           */
+/* En entrée             : pile - Pointeur sur la structure de pile.                                  */
 /*                                                                                                    */
-/* En sortie :    Rien en sortie.                                                                     */
+/* En sortie             :        Rien en sortie.                                                     */
 /*                                                                                                    */
-/* Variable(s) locale(s) : i - variable servant de variable de boucle.                                */
+/* Variable(s) locale(s) : i    - Variable servant de variable de boucle.                             */
 /*                                                                                                    */
 /*----------------------------------------------------------------------------------------------------*/
 
-void AffichageContenuPile(char * pmotif, pile_t * pile)
+void AffichageContenuPile(pile_t * pile)
 {
-	int i ;
 
-	if(pmotif)                                                 /*si le motif existe*/
-	  {
-	    
-	    printf("%s", pmotif);
-	    
-	  }
-
-	for(i = 0; i <= pile->NumeroSommet; ++i)
-	  {
-	    
-	    if(EstMajuscule((pile->tab)[i]))
-	      {
-		
-		printf("%c",(((pile->tab)[i])->valeur) + ('a' - 'A'));
-		
-	      }
-	    else
-	      {
-		
-		printf("%c",((pile->tab)[i])->valeur);
-		
-	      }
-	    
-	  }
-	
+  int i ;
+  
+  /* if(pmotif)                                                 si le motif existe
+    {
+      
+      printf("%s", pmotif);
+      
+    }*/
+  
+  for(i = 0; i <= pile->NumeroSommet; ++i)
+    {
+      
+      if(EstMajuscule((pile->tab)[i]))                      /*si c'est une majuscule*/
+	{
+	  
+	  printf("%c",(((pile->tab)[i])->valeur) + ('a' - 'A'));
+	  
+	}
+      else
+	{
+	  
+	  printf("%c",((pile->tab)[i])->valeur);
+	  
+	}
+      
+    }
+  
 }
 
 

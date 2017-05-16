@@ -202,6 +202,7 @@ void CompareLettre(char c, lettre_t * pcar, int * comparaison)
 
 
 /*------------------------------------------------------------------------------------------------------*/
+/*                                                                                                      */
 /* RechercherPrec          Recherche une lettre dans la liste chainée des lettres.                      */
 /*                                                                                                      */
 /* En entrée             : PpteteListe - Pointeur de pointeur de tête de la liste chainée des lettres.  */
@@ -262,6 +263,7 @@ lettre_t **  RechercherPrec (lettre_t ** PpteteListe, char lettre, enum bool * p
 
 
 /*--------------------------------------------------------------------------------------------------------*/
+/*                                                                                                        */
 /* InsertionLettre         Insère une nouvelle lettre dans la liste chainée des lettres.                  */ 
 /*										     			  */ 
 /* En entrée             : ppcar - Pointeur de pointeur de tete de liste chainée des lettres ou pointeur  */
@@ -290,6 +292,7 @@ void InsertionLettre (lettre_t ** ppcar, lettre_t * pcar)
 
 
 /*-------------------------------------------------------------------------------------------------------*/
+/*                                                                                                       */
 /* SuppressionAction          Supprime une lettre de liste chainée courante des lettres.                 */ 
 /*										     			 */ 
 /* En entrée             : ppcar - Pointeur de pointeur de tete de liste chainée courante des lettres    */
@@ -300,6 +303,7 @@ void InsertionLettre (lettre_t ** ppcar, lettre_t * pcar)
 /*                                 ou pointeur sur la case pointeur de l'élément précédent de la liste   */
 /*                                   chainée courante des lettres.                                       */ 
 /* Variable(s) locale(s) : pcar - Pointeur sur lettre à supprimer.                                       */
+/*                                                                                                       */
 /*-------------------------------------------------------------------------------------------------------*/
 
 

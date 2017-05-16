@@ -12,17 +12,19 @@
 
 
 
-#ifndef GESTION_DICTIONNAIRE_ABORESCENTE_DICO_H
-#define GESTION_DICTIONNAIRE_ARBORESCENTE_DICO_H
+#ifndef _GESTION_DICTIONNAIRE_ARBORESCENTE_DICO_H
+#define _GESTION_DICTIONNAIRE_ARBORESCENTE_DICO_H
 
 
 
 
 
 
-
+#include <string.h>
 #include "./pile.h"
-#include "./lettre.h"
+
+
+
 
 
 
