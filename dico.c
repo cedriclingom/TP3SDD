@@ -97,7 +97,7 @@ lettre_t ** RechercheDivergence(char * pmot, int * position, lettre_t ** PpteteL
 
 	  (*position)++;                                            /*on avance dans le mot*/
 
-	  if((pmot[*position] != '\n'))   /*si on est pas à la fin du mot*/
+	  if((pmot[*position] != '\n') && (pmot[*position] != '\0'))   /*si on est pas à la fin du mot*/
 	    {
 
 	      prec = &((*prec)->lv);                                   /*On va vers le lien vertical*/
@@ -514,6 +514,15 @@ void RechercheMotif(lettre_t * pdico, char * pmotif)
 
       printf("Le mots commençant par le motif sont:\n");
 
+      if(EstMajuscule(*prec))
+	{
+	  
+	  printf("%s\n", pmotif);
+
+	  prec = &((*prec)->lv);
+	  
+	}
+      
       AffichageDicoAvecMotif(*prec, pmotif);                               /*Affiche les mots qui commencent par le motif*/
 
     }
