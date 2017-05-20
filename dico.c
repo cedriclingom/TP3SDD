@@ -518,10 +518,10 @@ void RechercheMotif(lettre_t * pdico, char * pmotif)
 	{
 	  
 	  printf("%s\n", pmotif);
-
-	  prec = &((*prec)->lv);
 	  
 	}
+
+      prec = &((*prec)->lv);
       
       AffichageDicoAvecMotif(*prec, pmotif);                               /*Affiche les mots qui commencent par le motif*/
 

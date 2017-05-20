@@ -14,11 +14,21 @@ int main(int argc, char ** argv)
 
       LectureFichier(argv[1], &pdico, &CodeLecture);
 
-      AffichageDico(pdico);                          /*Affiche le dictionnaire sans motif*/
+      if(CodeLecture)
+	{
 
-      RechercheDico(pdico);                          /*Affiche les mots d'un dictionnaire qui commence par un motif*/
+	  AffichageDico(pdico);                 /*Affiche le dictionnaire sans motif*/
+	  
+	  RechercheDico(pdico);                 /*Reherche un motif et affiche les mots d'un dictionnaire qui commence par ce motif*/
      
-      LibererDico(&pdico);
+	  LibererDico(&pdico);
+	}
+      else
+	{
+	  
+	  printf("Erreur de lecture dans le fichier!");
+
+	}
 		     
     }
   else
