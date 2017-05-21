@@ -322,7 +322,7 @@ void LectureFichier(char * NomFichier, lettre_t ** PpteteListe, enum bool * Pcod
 
 /*----------------------------------------------------------------------------------------------------*/
 /*                                                                                                    */
-/* AffichageDico               Affichage de tout les mots de dictionnaire en ordre alphabetique.      */
+/* AffichageDicoAvecMotif      Affichage de tout les mots de dictionnaire en ordre alphabetique.      */
 /*                                                                                                    */
 /* En entrée             : pdico         - Pointeur de tete de liste chainée de lettres.              */
 /*                         pmotif        - Pointeur sur une chaine de caractères.                     */
